@@ -49,11 +49,10 @@
 
     <h1>Do you love me?? ❤️</h1>
 
-    <div class="buttons">
-        <button id="yesBtn" onclick="sayYes()">YES</button>
-        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">NO</button>
-    </div>
-
+   <div class="buttons">
+    <button id="yesBtn" onclick="sayYes()">YES</button>
+    <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="moveButton()">NO</button>
+</div>
 <script>
     const bgMusic = document.getElementById("bgMusic");
     let musicStarted = false;
@@ -68,25 +67,30 @@
     }
 
 function sayYes() {
+    // Music permission and play
     startMusic();
     bgMusic.muted = false;
-    bgMusic.play();
+    bgMusic.play().catch(e => console.log("Music play error"));
 
+    // Naya Content (Billa Center, Baby Neeche aur Highlighted Text)
     document.body.innerHTML = `
         <div style="text-align:center; padding: 20px; font-family: sans-serif; background-color: #ffcad1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <h1 style="color:#ff4d6d; font-size: 2.5rem; margin-bottom: 20px;">hehe pakad liya love you mwahhh ❤️🥰</h1>
             
-            <div style="position: relative; width: 100%; max-width: 500px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px;">
+            <div style="position: relative; width: 100%; max-width: 500px; display: flex; align-items: center; justify-content: center; margin-bottom: 60px;">
                 <img src="idk.gif" style="width: 85%; border-radius: 20px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
                 
-                <img src="ai.gif" style="width: 35%; border-radius: 15px; position: absolute; bottom: -50px; right: -15px; z-index: 3; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <img src="ai.gif" style="width: 38%; border-radius: 15px; position: absolute; bottom: -70px; right: -20px; z-index: 3; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
             </div>
 
-            <p style="color: white; background-color: #ff4d6d; padding: 10px 20px; border-radius: 50px; font-size: 1.3rem; font-weight: bold; box-shadow: 0 0 15px rgba(255, 77, 109, 0.5); display: inline-block;">
-                (Ab view once me bejho fas fas)
-            </p>
+            <div style="margin-top: 60px;">
+                <p style="color: white; background-color: #ff4d6d; padding: 12px 25px; border-radius: 50px; font-size: 1.3rem; font-weight: bold; box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); display: inline-block;">
+                    (Ab view once me bejho fas fas)
+                </p>
+            </div>
         </div>
     `;
+}
 }
 // Ye messages "NO" button par dikhenge
 const noMessages = [
