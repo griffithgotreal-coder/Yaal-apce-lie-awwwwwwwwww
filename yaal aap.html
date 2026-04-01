@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        body {
+            background-color: #ffdae0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Taaki button screen se bahar na jaye */
+        }
+
+        h1 { color: #ff4d6d; text-shadow: 2px 2px #fff; font-size: 2.2rem; text-align: center; }
+
+        .gif-container img { width: 180px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        .buttons { margin-top: 50px; display: flex; gap: 30px; }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #ffffff; color: #ff4d6d; position: absolute; z-index: 999; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ6ejZic3Z4bmZ6eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/6X4S8pDkP6cQ7/giphy.gif">
+    </div>
+
+    <h1>Do you love me? ❤️</h1>
+
+    <div class="buttons">
+        <button id="yesBtn" onclick="sayYes()">YES</button>
+        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">NO</button>
+    </div>
+
+    <script>
+        let musicStarted = false;
+
+        function startMusic() {
+            if (!musicStarted) {
+                const music = document.getElementById('bgMusic');
+                music.play().catch(error => console.log("Music click ke baad chalega"));
+                musicStarted = true;
+            }
+        }
+
+        function moveButton() {
+            startMusic(); // Pehli baar touch/hover pe music start
+            
+            const noBtn = document.getElementById('noBtn');
+            const padding = 50; // Screen edges se door rakhne ke liye
+            
+            // Random position calculation within screen limits
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function sayYes() {
+            startMusic();
+            document.body.innerHTML = `
+                <div style="text-align:center;">
+                    <h1 style="color:#ff4d6d; font-size: 3rem;">hehe pakad liya love you mwahhh ❤️🥰</h1>
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmU4eHdtZzRxeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/v3u2Iqf8zI1l4/giphy.gif" style="width:300px; border-radius:20px;">
+                    <p style="color:#ff4d6d; font-size:1.5rem; margin-top:20px;">Ab view once me bejho fas fas</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
