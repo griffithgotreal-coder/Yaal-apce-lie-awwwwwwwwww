@@ -67,26 +67,27 @@
         }
     }
 
-    function sayYes() {
-        startMusic();
-        bgMusic.muted = false;
-        bgMusic.play();
+function sayYes() {
+    startMusic();
+    bgMusic.muted = false;
+    bgMusic.play();
 
-        // Beast Mode Layout: Billa Bada & Center, Baby Side mein
-        document.body.innerHTML = `
-            <div style="text-align:center; padding: 20px; font-family: sans-serif; background-color: #ffcad1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <h1 style="color:#ff4d6d; font-size: 2.5rem; margin-bottom: 20px;">hehe pakad liya love you mwahhh ❤️🥰</h1>
+    document.body.innerHTML = `
+        <div style="text-align:center; padding: 20px; font-family: sans-serif; background-color: #ffcad1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1 style="color:#ff4d6d; font-size: 2.5rem; margin-bottom: 20px;">hehe pakad liya love you mwahhh ❤️🥰</h1>
+            
+            <div style="position: relative; width: 100%; max-width: 500px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px;">
+                <img src="idk.gif" style="width: 85%; border-radius: 20px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
                 
-                <div style="position: relative; width: 100%; max-width: 500px; display: flex; align-items: center; justify-content: center;">
-                    <img src="idk.gif" style="width: 85%; border-radius: 20px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
-                    
-                    <img src="ai.gif" style="width: 35%; border-radius: 15px; position: absolute; bottom: -30px; right: 0px; z-index: 3; border: 4px solid white;">
-                </div>
-
-                <p style="color:#ff4d6d; font-size:1.2rem; margin-top:50px;">Ab view once me bejho fas fas</p>
+                <img src="ai.gif" style="width: 35%; border-radius: 15px; position: absolute; bottom: -50px; right: -15px; z-index: 3; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
             </div>
-        `;
-    }
+
+            <p style="color: white; background-color: #ff4d6d; padding: 10px 20px; border-radius: 50px; font-size: 1.3rem; font-weight: bold; box-shadow: 0 0 15px rgba(255, 77, 109, 0.5); display: inline-block;">
+                (Ab view once me bejho fas fas)
+            </p>
+        </div>
+    `;
+}
 
     function moveButton() {
         startMusic(); // No button pe jaate hi music ready ho jayega
