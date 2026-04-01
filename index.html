@@ -88,21 +88,37 @@ function sayYes() {
         </div>
     `;
 }
+// Ye messages "NO" button par dikhenge
+const noMessages = [
+    "tf??",
+    "Aap mujhe dhokha doge??",
+    "Try again bbg ✨",
+    "Agar aap yes par nhi dabaoge to me aapke daba duga",
+    "ye jayda ho rha",
+    "Nahi hone wala, har maan lo ",
+    "Error 404: 'No' not found 🚫"
+];
 
-    function moveButton() {
-        startMusic(); // No button pe jaate hi music ready ho jayega
-        const noBtn = document.getElementById("noBtn");
-        const padding = 20;
-        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+function moveButton() {
+    startMusic(); // Music permission trigger
+    
+    const noBtn = document.getElementById("noBtn");
+    
+    // Random message select karo
+    const randomMsg = noMessages[Math.floor(Math.random() * noMessages.length)];
+    noBtn.innerText = randomMsg; // Button ka text badal jayega
 
-        const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-        const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+    const padding = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-        noBtn.style.position = "absolute";
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
-    }
+    const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+    const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
 </script>
 </body>
 </html>
