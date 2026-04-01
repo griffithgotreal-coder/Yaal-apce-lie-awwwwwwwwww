@@ -54,51 +54,54 @@
         <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">NO</button>
     </div>
 
-    <script>
-        let musicStarted = false;
+<script>
+    const bgMusic = document.getElementById("bgMusic");
+    let musicStarted = false;
 
-        function startMusic() {
-            if (!musicStarted) {
-                const music = document.getElementById('bgMusic');
-                music.play().catch(error => console.log("Music click ke baad chalega"));
+    // Music Permission Fix
+    function startMusic() {
+        if (!musicStarted) {
+            bgMusic.play().then(() => {
                 musicStarted = true;
-            }
+            }).catch(e => console.log("Click to play"));
         }
+    }
 
-        function moveButton() {
-            startMusic(); // Pehli baar touch/hover pe music start
-            
-            const noBtn = document.getElementById('noBtn');
-            const padding = 50; // Screen edges se door rakhne ke liye
-            
-            // Random position calculation within screen limits
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            
-            const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
-            
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
+    function sayYes() {
+        startMusic();
+        bgMusic.muted = false;
+        bgMusic.play();
 
-function sayYes() {
-    var audio = document.getElementById("bgMusic");
-    audio.muted = false; 
-    audio.play(); 
+        // Beast Mode Layout: Billa Bada & Center, Baby Side mein
+        document.body.innerHTML = `
+            <div style="text-align:center; padding: 20px; font-family: sans-serif; background-color: #ffcad1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <h1 style="color:#ff4d6d; font-size: 2.5rem; margin-bottom: 20px;">hehe pakad liya love you mwahhh ❤️🥰</h1>
+                
+                <div style="position: relative; width: 100%; max-width: 500px; display: flex; align-items: center; justify-content: center;">
+                    <img src="idk.gif" style="width: 85%; border-radius: 20px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+                    
+                    <img src="ai.gif" style="width: 35%; border-radius: 15px; position: absolute; bottom: -30px; right: 0px; z-index: 3; border: 4px solid white;">
+                </div>
 
-    document.body.innerHTML = `
-        <div style="text-align:center; padding: 20px; font-family: sans-serif;">
-            <h1 style="color:#ff4d6d; font-size: 2.5rem;">hehe pakad liya love you mwahhh ❤️🥰</h1>
-            
-            <img src="idk.gif" style="width: 45%; max-width: 300px; border-radius: 15px; margin: 10px;">
-            
-            <img src="ai.gif" style="width: 45%; max-width: 300px; border-radius: 15px; margin: 10px;">
+                <p style="color:#ff4d6d; font-size:1.2rem; margin-top:50px;">Ab view once me bejho fas fas</p>
+            </div>
+        `;
+    }
 
-            <p style="color:#ff4d6d; font-size:1.2rem; margin-top:20px;">Ab view once me bejho fas fas</p>
-        </div>
-    `;
-}
-    </script>
+    function moveButton() {
+        startMusic(); // No button pe jaate hi music ready ho jayega
+        const noBtn = document.getElementById("noBtn");
+        const padding = 20;
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+        const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+        const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+        noBtn.style.position = "absolute";
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+    }
+</script>
 </body>
 </html>
