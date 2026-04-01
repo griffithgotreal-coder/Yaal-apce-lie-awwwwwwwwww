@@ -45,7 +45,7 @@
     </audio>
 
     <div class="gif-container">
-    </div><img src="cute.gif">
+    </div><img src="mehu.gif">
 
     <h1>Do you love me?? ❤️</h1>
 
@@ -83,12 +83,19 @@
         }
 
 function sayYes() {
-    startMusic();
+    var audio = document.getElementById("bgMusic");
+    audio.muted = false; 
+    audio.play(); 
+
     document.body.innerHTML = `
-        <div style="text-align:center; margin-top: 50px;">
-            <h1 style="color:#ff4d6d; font-size: 3rem;">hehe pakad liya Love you ❤️</h1>
-            <img src="idk.gif" style="width: 80%; max-width: 400px; border-radius: 20px; margin-top: 20px;">
-            <p style="color:#ff4d6d; font-size:1.5rem; margin-top:20px;">Ab view options mein jaake music on karlo!</p>
+        <div style="text-align:center; padding: 20px; font-family: sans-serif;">
+            <h1 style="color:#ff4d6d; font-size: 2.5rem;">hehe pakad liya love you mwahhh ❤️🥰</h1>
+            
+            <img src="idk.gif" style="width: 45%; max-width: 300px; border-radius: 15px; margin: 10px;">
+            
+            <img src="ai.gif" style="width: 45%; max-width: 300px; border-radius: 15px; margin: 10px;">
+
+            <p style="color:#ff4d6d; font-size:1.2rem; margin-top:20px;">Ab view once me bejho fas fas</p>
         </div>
     `;
 }
