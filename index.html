@@ -1,128 +1,54 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
-    <style>
-        body {
-            background-color: #ffdae0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* Taaki button screen se bahar na jaye */
-        }
-
-        h1 { color: #ff4d6d; text-shadow: 2px 2px #fff; font-size: 2.2rem; text-align: center; }
-
-        .gif-container img { width: 180px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-
-        .buttons { margin-top: 50px; display: flex; gap: 30px; }
-
-        button {
-            padding: 15px 35px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #ffffff; color: #ff4d6d; position: absolute; z-index: 999; }
-    </style>
+    <title>Air Draw | Gesture Doodler</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- MediaPipe Hands -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="app-container">
+        <!-- Webcam Feed (Background) -->
+        <video id="input_video" class="input_video" autoplay playsinline></video>
+        
+        <!-- Canvas for drawing -->
+        <canvas id="output_canvas" class="output_canvas"></canvas>
+        <canvas id="drawing_canvas" class="drawing_canvas"></canvas>
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="gif-container">
-    </div><img src="mehu.gif">
-
-    <h1>Do you love me?? ❤️</h1>
-
-   <div class="buttons">
-    <button id="yesBtn" onclick="sayYes()">YES</button>
-    <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="moveButton()">NO</button>
-</div>
-<script>
-    const bgMusic = document.getElementById("bgMusic");
-    let musicStarted = false;
-
-    // Music Permission Fix
-    function startMusic() {
-        if (!musicStarted) {
-            bgMusic.play().then(() => {
-                musicStarted = true;
-            }).catch(e => console.log("Click to play"));
-        }
-    }
-
-function sayYes() {
-    // Music permission and play
-    startMusic();
-    bgMusic.muted = false;
-    bgMusic.play().catch(e => console.log("Music play error"));
-
-    // Naya Content (Billa Center, Baby Neeche aur Highlighted Text)
-    document.body.innerHTML = `
-        <div style="text-align:center; padding: 20px; font-family: sans-serif; background-color: #ffcad1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <h1 style="color:#ff4d6d; font-size: 2.5rem; margin-bottom: 20px;">hehe pakad liya love you mwahhh ❤️🥰</h1>
+        <!-- UI Overlay -->
+        <div class="ui-panel glass">
+            <h1>Air Draw ✨</h1>
+            <p class="subtitle">Pinch your index and thumb to draw!</p>
             
-            <div style="position: relative; width: 100%; max-width: 500px; display: flex; align-items: center; justify-content: center; margin-bottom: 60px;">
-                <img src="idk.gif" style="width: 85%; border-radius: 20px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
-                
-                <img src="ai.gif" style="width: 38%; border-radius: 15px; position: absolute; bottom: -70px; right: -20px; z-index: 3; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-            </div>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Colors</label>
+                    <div class="color-picker">
+                        <button class="color-btn active" data-color="#ff3366" style="background-color: #ff3366;"></button>
+                        <button class="color-btn" data-color="#00e676" style="background-color: #00e676;"></button>
+                        <button class="color-btn" data-color="#00ddff" style="background-color: #00ddff;"></button>
+                        <button class="color-btn" data-color="#ffea00" style="background-color: #ffea00;"></button>
+                        <button class="color-btn" data-color="#ffffff" style="background-color: #ffffff;"></button>
+                    </div>
+                </div>
 
-            <div style="margin-top: 60px;">
-                <p style="color: white; background-color: #ff4d6d; padding: 12px 25px; border-radius: 50px; font-size: 1.3rem; font-weight: bold; box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); display: inline-block;">
-                    (Ab view once me bejho fas fas)
-                </p>
+                <div class="control-group">
+                    <label>Brush Size</label>
+                    <input type="range" id="brush_size" min="2" max="25" value="5">
+                </div>
+
+                <button id="clear_btn" class="action-btn">Clear Canvas</button>
             </div>
+            
+            <div id="status" class="status loading">Initializing Camera...</div>
         </div>
-    `;
-}
-}
-// Ye messages "NO" button par dikhenge
-const noMessages = [
-    "tf??",
-    "Aap mujhe dhokha doge?☹️",
-    "Try again bbg 💋",
-    "Agar aap yes par nhi dabaoge to me aapke daba duga🥺",
-    "ye jayda ho rha",
-    "Nahi hone wala, har maan lo ",
-    "Error 404: 'No' not found 🚫"
-];
-
-function moveButton() {
-    startMusic(); // Music permission trigger
-    
-    const noBtn = document.getElementById("noBtn");
-    
-    // Random message select karo
-    const randomMsg = noMessages[Math.floor(Math.random() * noMessages.length)];
-    noBtn.innerText = randomMsg; // Button ka text badal jayega
-
-    const padding = 20;
-    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-
-    const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-    const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
-
-    noBtn.style.position = "absolute";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
-}
-</script>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
